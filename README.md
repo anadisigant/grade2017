@@ -1,4 +1,4 @@
-# Grade BSI — IFBA Vitória da Conquista
+# Grade BSI 2016.2
 
 Rastreador de progresso da grade curricular do curso de Bacharelado em Sistemas de Informação (Matriz 2016.2). Permite marcar disciplinas concluídas e acompanhar o desbloqueio de pré-requisitos.
 
