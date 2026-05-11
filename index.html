@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grade BSI · IFBA Vitória da Conquista</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,450;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,450;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- barra superior -->
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="topbar-left">
       <a class="logo" href="#">
@@ -58,29 +62,37 @@
     </div>
   </div>
 
-  <!-- grade principal -->
+  <!-- MAIN GRID -->
   <main class="main">
     <div class="semesters-grid" id="grid"></div>
   </main>
 
-  <!-- legenda -->
+  <!-- LEGEND -->
   <div class="legend-bar">
     <span class="legend-label">Legenda</span>
     <div class="legend-items">
-      <div class="legend-item"><div class="legend-dot ld-done"></div>Concluída</div>
-      <div class="legend-item"><div class="legend-dot ld-avail"></div>Disponível</div>
-      <div class="legend-item"><div class="legend-dot ld-lock"></div>Bloqueada</div>
-      <div class="legend-item"><div class="legend-dot ld-opt"></div>Optativa</div>
+      <div class="legend-item">
+        <div class="legend-dot ld-done"></div>Concluída
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-avail"></div>Disponível
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-lock"></div>Bloqueada
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-opt"></div>Optativa
+      </div>
     </div>
   </div>
 
-  <!-- dica de ferramenta -->
+  <!-- TOOLTIP -->
   <div class="tooltip" id="tip"></div>
 
-  <!-- notificação toast -->
+  <!-- TOAST -->
   <div class="toast" id="toast"></div>
-
   <script type="module" src="app.js"></script>
 
 </body>
+
 </html>
