@@ -9,7 +9,7 @@ export let done = new Set();
 
 /**
  * Returns the display state of a discipline.
- * @param {{ id: string, type: string, pre: string[] }} disc
+ * @param {{ id: string, tipo: string, pre: string[] }} disc
  * @returns {'done' | 'avail' | 'lock' | 'opt'}
  */
 export function getState(disc) {
@@ -19,16 +19,31 @@ export function getState(disc) {
 }
 
 /**
- * Toggles a discipline: marks as done or removes it (cascading).
+ * Recursively marks a discipline and all its prerequisites as done.
+ * @param {string} id
+ */
+function markWithPrereqs(id) {
+  const disc = DISCS.find(x => x.id === id);
+  if (!disc || done.has(id)) return;
+  // First, satisfy all prerequisites recursively
+  disc.pre.forEach(pid => markWithPrereqs(pid));
+  done.add(id);
+}
+
+/**
+ * Toggles a discipline.
+ * - If locked: marks it AND all its prerequisites as done (cascade up).
+ * - If done: removes it and all dependents (cascade down).
+ * - If avail/opt: marks it as done.
  * @param {string} id
  * @returns {boolean} whether a change was made
  */
 export function toggle(id) {
   const disc = DISCS.find(x => x.id === id);
-  if (!disc || getState(disc) === 'lock') return false;
+  if (!disc) return false;
 
   if (done.has(id)) {
-    // Remove this discipline and all dependents (cascade)
+    // Remove this discipline and all dependents (cascade down)
     const cascade = new Set();
     function collectDependents(rid) {
       cascade.add(rid);
@@ -37,7 +52,38 @@ export function toggle(id) {
     collectDependents(id);
     cascade.forEach(cid => done.delete(cid));
   } else {
-    done.add(id);
+    // Mark this discipline and all prerequisites as done (cascade up)
+    markWithPrereqs(id);
+  }
+
+  return true;
+}
+
+/**
+ * Marks all disciplines in a semester as done (including their prerequisites).
+ * If all are already done, removes them all instead (toggle behaviour).
+ * @param {number} sem  1-based semester number
+ * @returns {boolean} whether a change was made
+ */
+export function toggleSemester(sem) {
+  const semDiscs = DISCS.filter(d => d.sem === sem);
+  const allDone = semDiscs.every(d => done.has(d.id));
+
+  if (allDone) {
+    // Un-mark all in this semester AND their dependents
+    semDiscs.forEach(d => {
+      if (!done.has(d.id)) return;
+      const cascade = new Set();
+      function collectDependents(rid) {
+        cascade.add(rid);
+        DISCS.filter(x => x.pre.includes(rid)).forEach(x => collectDependents(x.id));
+      }
+      collectDependents(d.id);
+      cascade.forEach(cid => done.delete(cid));
+    });
+  } else {
+    // Mark all in this semester (with prerequisites)
+    semDiscs.forEach(d => markWithPrereqs(d.id));
   }
 
   return true;

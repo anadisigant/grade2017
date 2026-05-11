@@ -1,7 +1,7 @@
 // ── UI / RENDERING ────────────────────────────────────────────────────────────
 
 import { DISCS, TOTAL_H, SEM_H, SEM_LABELS } from './data.js';
-import { done, getState, toggle } from './state.js';
+import { done, getState, toggle, toggleSemester } from './state.js';
 import { showTooltip, moveTooltip, hideTooltip } from './tooltip.js';
 
 // ── TOAST ─────────────────────────────────────────────────────────────────────
@@ -76,7 +76,8 @@ function patchCard(card, disc, state) {
     existingLock.remove();
   }
 
-  card.style.cursor = state === 'lock' ? 'default' : 'pointer';
+  // Locked cards are now also clickable (auto-fulfils prerequisites)
+  card.style.cursor = 'pointer';
 }
 
 // ── CARD BUILD (first render only) ───────────────────────────────────────────
@@ -92,7 +93,8 @@ function buildCard(disc, animIndex) {
   card.className = cls;
   card.id = `card-${disc.id}`;
   card.style.animationDelay = `${animIndex * 0.04}s`;
-  card.style.cursor = state === 'lock' ? 'default' : 'pointer';
+  // Locked cards are also clickable
+  card.style.cursor = 'pointer';
 
   card.innerHTML = `
     ${state === 'lock' ? '<span class="lock-icon">—</span>' : ''}
@@ -120,6 +122,11 @@ function buildCard(disc, animIndex) {
 function handleToggle(id) {
   const changed = toggle(id);
   if (!changed) return;
+  patchAll();
+}
+
+function handleSemesterToggle(sem) {
+  toggleSemester(sem);
   patchAll();
 }
 
@@ -178,12 +185,18 @@ export function render() {
 
     const col = document.createElement('div');
     col.className = 'sem-col';
-    col.innerHTML = `
-      <div class="sem-header">
-        <span class="sem-label">${SEM_LABELS[s - 1]}</span>
-        <span class="sem-hours">${SEM_H[s - 1]}h</span>
-      </div>
+
+    const header = document.createElement('div');
+    header.className = 'sem-header';
+    header.title = 'Clique para marcar/desmarcar todas as matérias deste semestre';
+    header.innerHTML = `
+      <span class="sem-label">${SEM_LABELS[s - 1]}</span>
+      <span class="sem-hours">${SEM_H[s - 1]}h</span>
     `;
+    header.style.cursor = 'pointer';
+    header.addEventListener('click', () => handleSemesterToggle(s));
+    col.appendChild(header);
+
     discs.forEach((d, i) => col.appendChild(buildCard(d, i)));
     grid.appendChild(col);
   }

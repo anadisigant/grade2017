@@ -1,6 +1,6 @@
 export const TOTAL_H = 3150;
 export const SEM_H = [360, 360, 360, 360, 360, 360, 630, 180];
-export const SEM_LABELS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
+export const SEM_LABELS = ['1º Semestre', '2º Semestre', '3º Semestre', '4º Semestre', '5º Semestre', '6º Semestre', '7º Semestre', '8º Semestre'];
 
 /** @typedef {{ id: string, sem: number, nome: string, tipo: string, h: number, pre: string[] }} Disciplina */
 
