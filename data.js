@@ -25,7 +25,7 @@ export const DISCS = [
           { id: 'd17', sem: 3, nome: 'Direito e Legislação em Informática',          tipo: 'HUM', h: 60, pre: [] },
           { id: 'd18', sem: 3, nome: 'Organizações, Sistemas e Métodos',             tipo: 'COM', h: 60, pre: [] },
   /* 4 */ { id: 'd19', sem: 4, nome: 'Metodologia da Pesquisa Científica',           tipo: 'COM', h: 60, pre: [] },
-          { id: 'd20', sem: 4, nome: 'Análise e Modelagem de Sistemas',              tipo: 'TEC', h: 60, pre: ['d14'] },
+          { id: 'd20', sem: 4, nome: 'Análise e Modelagem de Sistemas',              tipo: 'TEC', h: 60, pre: ['d13'] },
           { id: 'd21', sem: 4, nome: 'Banco de Dados I',                             tipo: 'TEC', h: 60, pre: ['d14'] },
           { id: 'd22', sem: 4, nome: 'Redes de Computadores',                        tipo: 'TEC', h: 60, pre: ['d15'] },
           { id: 'd23', sem: 4, nome: 'Paradigmas de Linguagens de Programação',      tipo: 'CCO', h: 60, pre: ['d13'] },
@@ -51,7 +51,7 @@ export const DISCS = [
           { id: 'd43', sem: 7, nome: 'Gestão e Governança de TI',                   tipo: 'TEC', h: 60, pre: [] },
   /* 8 */ { id: 'd44', sem: 8, nome: 'Meio Ambiente',                                tipo: 'HUM', h: 60, pre: [] },
           { id: 'd45', sem: 8, nome: 'Trabalho de Conclusão de Curso II',            tipo: 'SUP', h: 60, pre: [ 'd38' ] },
-          { id: 'd46', sem: 8, nome: 'Sistemas de Apoio a Decisão',                  tipo: 'TEC', h: 60, pre: ['d01'] },
+          { id: 'd46', sem: 8, nome: 'Sistemas de Apoio a Decisão',                  tipo: 'TEC', h: 60, pre: [] },
           { id: 'd47', sem: 8, nome: 'Optativa C',                                   tipo: 'OPT', h: 60, pre: [] },
           { id: 'd48', sem: 8, nome: 'Optativa D',                                   tipo: 'OPT', h: 60, pre: [] },
 ];
