@@ -1,7 +1,7 @@
-/* ── RESET ───────────────────────────────────────────── */
+/* ── reset ───────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── TOKENS ──────────────────────────────────────────── */
+/* ── tokens ──────────────────────────────────────────── */
 :root {
   --bg:        #0e1117;
   --surface:   #161b25;
@@ -9,7 +9,7 @@
   --line:      rgba(255,255,255,0.08);
   --line2:     rgba(255,255,255,0.14);
 
-  /* Contraste melhorado: textos mais brilhantes */
+  /* contraste melhorado: textos mais brilhantes */
   --text:      #e8ecf4;
   --text2:     #8f9ab5;
   --text3:     #5a637a;
@@ -66,7 +66,7 @@
   --accent:    #1e4fc2;
 }
 
-/* ── BASE ────────────────────────────────────────────── */
+/* ── base ────────────────────────────────────────────── */
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font);
@@ -77,7 +77,7 @@ body {
   line-height: 1.5;
 }
 
-/* ── TOPBAR ──────────────────────────────────────────── */
+/* ── barra superior ──────────────────────────────────── */
 .topbar {
   position: sticky; top: 0; z-index: 100;
   background: var(--bg);
@@ -124,7 +124,7 @@ body {
   font-size: 14px;
 }
 
-/* ── PROGRESS BAR ────────────────────────────────────── */
+/* ── barra de progresso ──────────────────────────────── */
 .progress-strip {
   background: var(--surface);
   border-bottom: 1px solid var(--line2);
@@ -154,28 +154,28 @@ body {
   transition: width 0.45s cubic-bezier(.4,0,.2,1);
 }
 
-/* ── GRID ────────────────────────────────────────────── */
+/* ── grade ───────────────────────────────────────────── */
 .main {
   padding: 16px 20px;
-  /* Permite rolar horizontalmente apenas quando necessário */
+  /* permite rolar horizontalmente apenas quando necessário */
   overflow-x: auto;
 }
 
-/* Em telas grandes, as colunas se expandem para preencher toda a largura */
+/* em telas grandes, as colunas se expandem para preencher toda a largura */
 .semesters-grid {
   display: grid;
   /* 8 colunas com tamanho mínimo de 140 px, crescendo igualmente */
   grid-template-columns: repeat(8, minmax(140px, 1fr));
   gap: 10px;
   align-items: flex-start;
-  /* Mínimo para garantir scroll em telas muito estreitas */
+  /* mínimo para garantir scroll em telas muito estreitas */
   min-width: min(100%, 1120px);
   width: 100%;
 }
 
-/* ── SEMESTER COLUMN ─────────────────────────────────── */
+/* ── coluna de semestre ──────────────────────────────── */
 .sem-col {
-  min-width: 0;   /* permite encolher dentro do grid */
+  min-width: 0;   /* permite encolher dentro da grade */
   flex-shrink: 0;
 }
 .sem-header {
@@ -189,7 +189,7 @@ body {
 .sem-header:hover .sem-label { color: var(--accent); }
 .sem-header:hover .sem-hours { color: var(--text2); }
 
-/* ── DISCIPLINE CARD ─────────────────────────────────── */
+/* ── cartão de disciplina ────────────────────────────── */
 .disc-card {
   border-radius: var(--r);
   padding: 10px 11px 9px;
@@ -214,7 +214,7 @@ body {
 
 .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; margin-bottom: 8px; }
 
-/* Nomes de matérias com contraste alto em todos os estados */
+/* nomes de matérias com contraste alto em todos os estados */
 .card-name { font-size: 11px; font-weight: 500; line-height: 1.45; flex: 1; color: var(--text); }
 .s-done  .card-name { color: var(--done); }
 .s-avail .card-name { color: var(--avail); }
@@ -250,7 +250,7 @@ body {
   background: var(--surface2);
   color: var(--text2);
 }
-/* Cores de badge com contraste reforçado */
+/* cores de badge com contraste reforçado */
 .tb-CCO { color: #b49fff; }
 .tb-COM { color: #f09fd6; }
 .tb-MAT { color: #ff8a8a; }
@@ -261,7 +261,7 @@ body {
 
 .card-hours { font-size: 10px; color: var(--text2); font-family: var(--mono); font-weight: 500; }
 
-/* ── TOOLTIP ─────────────────────────────────────────── */
+/* ── dica de ferramenta ──────────────────────────────── */
 .tooltip {
   position: fixed; z-index: 9999;
   background: var(--surface);
@@ -278,7 +278,7 @@ body {
 .tip-item::before { content: '·'; color: var(--text3); flex-shrink: 0; }
 .tip-item.missing { color: #f06060; }
 
-/* ── LEGEND ──────────────────────────────────────────── */
+/* ── legenda ─────────────────────────────────────────── */
 .legend-bar {
   background: var(--surface);
   border-top: 1px solid var(--line2);
@@ -296,7 +296,7 @@ body {
 .ld-lock  { background: var(--text3); }
 .ld-opt   { background: var(--opt); }
 
-/* ── TOAST ───────────────────────────────────────────── */
+/* ── notificação toast ───────────────────────────────── */
 .toast {
   position: fixed; bottom: 64px; left: 50%;
   transform: translateX(-50%) translateY(6px);
@@ -311,22 +311,22 @@ body {
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-/* ── ANIMATIONS ──────────────────────────────────────── */
+/* ── animações ───────────────────────────────────────── */
 @keyframes cardIn {
   from { opacity: 0; transform: translateY(5px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RESPONSIVE ──────────────────────────────────────── */
+/* ── responsivo ──────────────────────────────────────── */
 
-/* Tablet (≤ 900 px): 4 colunas por linha */
+/* tablet (≤ 900 px): 4 colunas por linha */
 @media (max-width: 900px) {
   .semesters-grid {
     grid-template-columns: repeat(4, minmax(140px, 1fr));
   }
 }
 
-/* Mobile (≤ 600 px) */
+/* mobile (≤ 600 px) */
 @media (max-width: 600px) {
   .topbar { padding: 0 14px; height: 50px; }
   .logo-sub { display: none; }
@@ -339,14 +339,14 @@ body {
   .legend-bar { padding: 10px 14px; }
 }
 
-/* Muito estreito (≤ 360 px): 1 coluna */
+/* muito estreito (≤ 360 px): 1 coluna */
 @media (max-width: 360px) {
   .semesters-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* ── SCROLLBAR ───────────────────────────────────────── */
+/* ── barra de rolagem ────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }

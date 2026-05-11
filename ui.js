@@ -1,10 +1,10 @@
-// ── UI / RENDERING ────────────────────────────────────────────────────────────
+// ── interface / renderização ─────────────────────────────────────────────────
 
 import { DISCS, TOTAL_H, SEM_H, SEM_LABELS } from './data.js';
 import { done, getState, toggle, toggleSemester } from './state.js';
 import { showTooltip, moveTooltip, hideTooltip } from './tooltip.js';
 
-// ── TOAST ─────────────────────────────────────────────────────────────────────
+// ── notificação toast ────────────────────────────────────────────────────────
 
 let toastTimer = null;
 
@@ -16,7 +16,7 @@ export function showToast(message) {
   toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
 }
 
-// ── THEME ─────────────────────────────────────────────────────────────────────
+// ── tema ─────────────────────────────────────────────────────────────────────
 
 let currentTheme = 'dark';
 
@@ -38,17 +38,17 @@ function applyTheme(theme) {
   btn.textContent = theme === 'dark' ? '○' : '●';
 }
 
-// ── CARD STATE PATCH ──────────────────────────────────────────────────────────
-// Instead of destroying and rebuilding the entire DOM on every toggle,
-// we patch only the cards whose state actually changed.
+// ── atualização parcial do cartão ────────────────────────────────────────────
+// em vez de destruir e reconstruir o dom inteiro a cada alternância,
+// atualizamos apenas os cartões cujo estado realmente mudou.
 
-/** @type {Map<string, string>} id → last rendered state */
+/** @type {Map<string, string>} id → último estado renderizado */
 const prevStates = new Map();
 
 const STATE_CLASSES = ['s-done', 's-avail', 's-lock', 's-opt'];
 
 /**
- * Applies current state to an existing card element (no re-create).
+ * aplica o estado atual a um elemento de cartão existente (sem recriar).
  * @param {HTMLElement} card
  * @param {{ id: string, name: string, type: string, h: number }} disc
  * @param {string} state
@@ -56,16 +56,16 @@ const STATE_CLASSES = ['s-done', 's-avail', 's-lock', 's-opt'];
 function patchCard(card, disc, state) {
   const isOpt = disc.tipo === 'OPT';
 
-  // Update classes
+  // atualiza as classes
   STATE_CLASSES.forEach(c => card.classList.remove(c));
   card.classList.add(`s-${state}`);
   if (isOpt && state === 'done') card.classList.add('s-opt');
 
-  // Update check indicator
+  // atualiza o indicador de marcação
   const check = card.querySelector('.check-box');
   if (check) check.textContent = state === 'done' ? '✓' : '';
 
-  // Update lock indicator
+  // atualiza o indicador de bloqueio
   const existingLock = card.querySelector('.lock-icon');
   if (state === 'lock' && !existingLock) {
     const lock = document.createElement('span');
@@ -76,11 +76,11 @@ function patchCard(card, disc, state) {
     existingLock.remove();
   }
 
-  // Locked cards are now also clickable (auto-fulfils prerequisites)
+  // cartões bloqueados também são clicáveis (pré-requisitos preenchidos automaticamente)
   card.style.cursor = 'pointer';
 }
 
-// ── CARD BUILD (first render only) ───────────────────────────────────────────
+// ── construção do cartão (apenas na primeira renderização) ───────────────────
 
 function buildCard(disc, animIndex) {
   const state = getState(disc);
@@ -93,7 +93,7 @@ function buildCard(disc, animIndex) {
   card.className = cls;
   card.id = `card-${disc.id}`;
   card.style.animationDelay = `${animIndex * 0.04}s`;
-  // Locked cards are also clickable
+  // cartões bloqueados também são clicáveis
   card.style.cursor = 'pointer';
 
   card.innerHTML = `
@@ -117,7 +117,7 @@ function buildCard(disc, animIndex) {
   return card;
 }
 
-// ── TOGGLE HANDLER ────────────────────────────────────────────────────────────
+// ── manipulador de alternância ───────────────────────────────────────────────
 
 function handleToggle(id) {
   const changed = toggle(id);
@@ -130,7 +130,7 @@ function handleSemesterToggle(sem) {
   patchAll();
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────────
+// ── estatísticas ─────────────────────────────────────────────────────────────
 
 function updateStats() {
   let nDone = 0, nAvail = 0, nLock = 0, hDone = 0;
@@ -152,7 +152,7 @@ function updateStats() {
   document.getElementById('prog-fill').style.width = `${pct}%`;
 }
 
-// ── PATCH ALL (surgical update after toggle) ──────────────────────────────────
+// ── atualização geral (cirúrgica após alternância) ───────────────────────────
 
 function patchAll() {
   DISCS.forEach(disc => {
@@ -170,7 +170,7 @@ function patchAll() {
   updateStats();
 }
 
-// ── INITIAL RENDER (builds all DOM, runs once) ────────────────────────────────
+// ── renderização inicial (constrói todo o dom, executa uma vez) ──────────────
 
 export function render() {
   const grid = document.getElementById('grid');
@@ -204,9 +204,9 @@ export function render() {
   updateStats();
 }
 
-// ── FULL CLEAR RESET ──────────────────────────────────────────────────────────
+// ── reinicialização completa ─────────────────────────────────────────────────
 
 export function renderAfterClear() {
-  // Re-use initial render since all states reset
+  // reutiliza a renderização inicial pois todos os estados foram resetados
   render();
 }

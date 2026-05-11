@@ -1,14 +1,14 @@
-// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── estado ────────────────────────────────────────────────────────────────────
 
 import { DISCS } from './data.js';
 
 const STORAGE_KEY = 'bsi_ifba_2016';
 
-/** @type {Set<string>} IDs of completed disciplines */
+/** @type {Set<string>} ids das disciplinas concluídas */
 export let done = new Set();
 
 /**
- * Returns the display state of a discipline.
+ * retorna o estado de exibição de uma disciplina.
  * @param {{ id: string, tipo: string, pre: string[] }} disc
  * @returns {'done' | 'avail' | 'lock' | 'opt'}
  */
@@ -19,31 +19,31 @@ export function getState(disc) {
 }
 
 /**
- * Recursively marks a discipline and all its prerequisites as done.
+ * marca recursivamente uma disciplina e todos os seus pré-requisitos como concluídos.
  * @param {string} id
  */
 function markWithPrereqs(id) {
   const disc = DISCS.find(x => x.id === id);
   if (!disc || done.has(id)) return;
-  // First, satisfy all prerequisites recursively
+  // primeiro, satisfaz todos os pré-requisitos recursivamente
   disc.pre.forEach(pid => markWithPrereqs(pid));
   done.add(id);
 }
 
 /**
- * Toggles a discipline.
- * - If locked: marks it AND all its prerequisites as done (cascade up).
- * - If done: removes it and all dependents (cascade down).
- * - If avail/opt: marks it as done.
+ * alterna o estado de uma disciplina.
+ * - se bloqueada: marca ela e todos os pré-requisitos como concluídos (cascata acima).
+ * - se concluída: remove ela e todas as dependentes (cascata abaixo).
+ * - se disponível/optativa: marca como concluída.
  * @param {string} id
- * @returns {boolean} whether a change was made
+ * @returns {boolean} indica se houve alguma alteração
  */
 export function toggle(id) {
   const disc = DISCS.find(x => x.id === id);
   if (!disc) return false;
 
   if (done.has(id)) {
-    // Remove this discipline and all dependents (cascade down)
+    // remove esta disciplina e todas as dependentes (cascata abaixo)
     const cascade = new Set();
     function collectDependents(rid) {
       cascade.add(rid);
@@ -52,7 +52,7 @@ export function toggle(id) {
     collectDependents(id);
     cascade.forEach(cid => done.delete(cid));
   } else {
-    // Mark this discipline and all prerequisites as done (cascade up)
+    // marca esta disciplina e todos os pré-requisitos como concluídos (cascata acima)
     markWithPrereqs(id);
   }
 
@@ -60,17 +60,17 @@ export function toggle(id) {
 }
 
 /**
- * Marks all disciplines in a semester as done (including their prerequisites).
- * If all are already done, removes them all instead (toggle behaviour).
- * @param {number} sem  1-based semester number
- * @returns {boolean} whether a change was made
+ * marca todas as disciplinas de um semestre como concluídas (incluindo pré-requisitos).
+ * se todas já estiverem concluídas, remove todas em vez disso (comportamento de alternância).
+ * @param {number} sem  número do semestre (base 1)
+ * @returns {boolean} indica se houve alguma alteração
  */
 export function toggleSemester(sem) {
   const semDiscs = DISCS.filter(d => d.sem === sem);
   const allDone = semDiscs.every(d => done.has(d.id));
 
   if (allDone) {
-    // Un-mark all in this semester AND their dependents
+    // desmarca todas do semestre e suas dependentes
     semDiscs.forEach(d => {
       if (!done.has(d.id)) return;
       const cascade = new Set();
@@ -82,14 +82,14 @@ export function toggleSemester(sem) {
       cascade.forEach(cid => done.delete(cid));
     });
   } else {
-    // Mark all in this semester (with prerequisites)
+    // marca todas do semestre (com pré-requisitos)
     semDiscs.forEach(d => markWithPrereqs(d.id));
   }
 
   return true;
 }
 
-// ── PERSISTENCE ───────────────────────────────────────────────────────────────
+// ── persistência ──────────────────────────────────────────────────────────────
 
 export function saveProgress() {
   try {
@@ -105,7 +105,7 @@ export function loadProgress() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) done = new Set(JSON.parse(stored));
   } catch {
-    // ignore corrupt data
+    // ignora dados corrompidos
   }
 }
 
