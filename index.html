@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade BSI · IFBA Vitória da Conquista</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,450;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="course-selector">
+        <button class="btn course-toggle" id="course-toggle" aria-haspopup="true" aria-expanded="false">
+          <span id="course-abbr">BSI</span>
+          <span class="chevron">▾</span>
+        </button>
+        <div class="course-menu" id="course-menu" hidden></div>
+      </div>
+      <a class="logo" href="#">
+        <span class="logo-mark" id="logo-mark">BSI</span>
+        <span class="logo-divider"></span>
+        <span class="logo-title">Grade Curricular</span>
+        <span class="logo-sub" id="logo-subtitle">IFBA · VCA · Matriz 2016.2</span>
+      </a>
+    </div>
+    <div class="topbar-right">
+      <button class="btn danger" id="btn-clear">Limpar</button>
+      <button class="btn primary" id="btn-save">Salvar</button>
+      <button class="btn icon" id="btn-theme" aria-label="Alternar tema">○</button>
+    </div>
+  </header>
+
+  <!-- barra de progresso -->
+  <div class="progress-strip">
+    <div class="progress-meta">
+      <div class="stats-row">
+        <div class="stat s-done">
+          <span class="stat-dot"></span>
+          <span class="stat-num" id="st-done">0</span>
+          <span>concluídas</span>
+        </div>
+        <div class="stat s-avail">
+          <span class="stat-dot"></span>
+          <span class="stat-num" id="st-avail">0</span>
+          <span>disponíveis</span>
+        </div>
+        <div class="stat s-lock">
+          <span class="stat-dot"></span>
+          <span class="stat-num" id="st-lock">0</span>
+          <span>bloqueadas</span>
+        </div>
+      </div>
+      <div class="progress-right">
+        <span class="pct-num" id="pct-label">0%</span>
+        <span class="pct-hours" id="pct-hours">0 / 3150h</span>
+      </div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="semesters-grid" id="grid"></div>
+  </main>
+
+  <div class="legend-bar">
+    <span class="legend-label">Legenda</span>
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="legend-dot ld-done"></div>Concluída
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-avail"></div>Disponível
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-lock"></div>Bloqueada
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ld-opt"></div>Optativa
+      </div>
+    </div>
+  </div>
+
+  <div class="tooltip" id="tip"></div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>
